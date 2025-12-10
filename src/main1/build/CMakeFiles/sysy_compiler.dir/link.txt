@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/sysy_compiler.dir/main.cpp.o CMakeFiles/sysy_compiler.dir/sysy.lex.cpp.o CMakeFiles/sysy_compiler.dir/sysy.tab.cpp.o  -o sysy_compiler 

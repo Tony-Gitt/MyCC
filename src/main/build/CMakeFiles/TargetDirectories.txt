@@ -1,0 +1,3 @@
+/home/saber/fun/MyCC/src/main/build/CMakeFiles/rebuild_cache.dir
+/home/saber/fun/MyCC/src/main/build/CMakeFiles/edit_cache.dir
+/home/saber/fun/MyCC/src/main/build/CMakeFiles/sysy_compiler.dir
