@@ -162,7 +162,7 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE yylval;
 
-int yyparse (std::unique_ptr<std::string> &ast);
+int yyparse (std::unique_ptr<BaseAST> &ast);
 
 #endif /* !YY_YY_HOME_SABER_FUN_MYCC_SRC_MAIN1_BUILD_SYSY_TAB_HPP_INCLUDED  */
 
@@ -527,7 +527,7 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    35,    35,    40,    47,    50,    54,    58
+       0,    35,    35,    40,    48,    53,    58,    63
 };
 #endif
 
@@ -699,7 +699,7 @@ do {                                                                      \
 `-----------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep, std::unique_ptr<std::string> &ast)
+yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep, std::unique_ptr<BaseAST> &ast)
 {
   FILE *yyoutput = yyo;
   YYUSE (yyoutput);
@@ -721,7 +721,7 @@ yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep, st
 `---------------------------*/
 
 static void
-yy_symbol_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep, std::unique_ptr<std::string> &ast)
+yy_symbol_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep, std::unique_ptr<BaseAST> &ast)
 {
   YYFPRINTF (yyo, "%s %s (",
              yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
@@ -759,7 +759,7 @@ do {                                                            \
 `------------------------------------------------*/
 
 static void
-yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp, int yyrule, std::unique_ptr<std::string> &ast)
+yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp, int yyrule, std::unique_ptr<BaseAST> &ast)
 {
   int yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
@@ -1049,7 +1049,7 @@ yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
 `-----------------------------------------------*/
 
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, std::unique_ptr<std::string> &ast)
+yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, std::unique_ptr<BaseAST> &ast)
 {
   YYUSE (yyvaluep);
   YYUSE (ast);
@@ -1079,7 +1079,7 @@ int yynerrs;
 `----------*/
 
 int
-yyparse (std::unique_ptr<std::string> &ast)
+yyparse (std::unique_ptr<BaseAST> &ast)
 {
     yy_state_fast_t yystate;
     /* Number of tokens to shift before error messages enabled.  */
@@ -1338,46 +1338,51 @@ yyreduce:
     ast->ident=*unique_ptr<string>((yyvsp[-3].str_val));
     ast->block=unique_ptr<BaseAST>((yyvsp[0].ast_val));
     (yyval.ast_val)=ast;
+    // 相当于指针作为返回
 }
-#line 1343 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
+#line 1344 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
     break;
 
   case 4:
-#line 47 "sysy.y"
+#line 48 "sysy.y"
               {
-    (yyval.ast_val)=new string("int");
+    auto type=new FuncTypeAST();
+    type->functype="int";
+    (yyval.ast_val)=type;
 }
-#line 1351 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
+#line 1354 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
     break;
 
   case 5:
-#line 50 "sysy.y"
+#line 53 "sysy.y"
                     {
-    auto stmt=unique_ptr<string>((yyvsp[-1].ast_val));
-    (yyval.ast_val)=new string("{"+*stmt+"}");
+    auto block=new BlockAST();
+    block->stmt=unique_ptr<BaseAST>((yyvsp[-1].ast_val));
+    (yyval.ast_val)=block;
 }
-#line 1360 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
+#line 1364 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
     break;
 
   case 6:
-#line 54 "sysy.y"
+#line 58 "sysy.y"
                         {
-    auto number=unique_ptr<string>((yyvsp[-1].int_val));
-    (yyval.ast_val)=new string("return "+*number+";");
+    auto stmt=new StmtAST();
+    stmt->number=((yyvsp[-1].int_val));
+    (yyval.ast_val)=stmt;
 }
-#line 1369 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
+#line 1374 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
     break;
 
   case 7:
-#line 58 "sysy.y"
+#line 63 "sysy.y"
                   {
-    (yyval.int_val)=new string(to_string((yyvsp[0].int_val)));
+    (yyval.int_val)=(yyvsp[0].int_val);
 }
-#line 1377 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
+#line 1382 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
     break;
 
 
-#line 1381 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
+#line 1386 "/home/saber/fun/MyCC/src/main1/build/sysy.tab.cpp"
 
       default: break;
     }
@@ -1609,10 +1614,10 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 62 "sysy.y"
+#line 67 "sysy.y"
 
 
-void yyerror(unique_ptr<string> &ast,const char *s){
+void yyerror(unique_ptr<BaseAST> &ast,const char *s){
     cerr<<"error: "<<s<<endl;
 }
 

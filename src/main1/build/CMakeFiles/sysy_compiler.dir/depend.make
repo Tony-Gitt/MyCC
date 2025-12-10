@@ -4,8 +4,10 @@
 CMakeFiles/sysy_compiler.dir/main.cpp.o: ../ast.hpp
 CMakeFiles/sysy_compiler.dir/main.cpp.o: ../main.cpp
 
+CMakeFiles/sysy_compiler.dir/sysy.lex.cpp.o: ../ast.hpp
 CMakeFiles/sysy_compiler.dir/sysy.lex.cpp.o: sysy.lex.cpp
 CMakeFiles/sysy_compiler.dir/sysy.lex.cpp.o: sysy.tab.hpp
 
+CMakeFiles/sysy_compiler.dir/sysy.tab.cpp.o: ../ast.hpp
 CMakeFiles/sysy_compiler.dir/sysy.tab.cpp.o: sysy.tab.cpp
 

@@ -15,7 +15,7 @@ void yyerror(std::unique_ptr<BaseAST> &ast,const char *s);
 using namespace std;
 %}
 
-%parse-param {std::unique_ptr<std::string> &ast} /* 生成字符串*/
+%parse-param {std::unique_ptr<BaseAST> &ast} /* 生成字符串*/
 %union{
     std::string *str_val;
     int int_val;
@@ -43,25 +43,30 @@ FuncDef : FuncType IDENT '(' ')' Block{
     ast->ident=*unique_ptr<string>($2);
     ast->block=unique_ptr<BaseAST>($5);
     $$=ast;
+    // 相当于指针作为返回
 };
 FuncType : INT{
-    $$=new string("int");
+    auto type=new FuncTypeAST();
+    type->functype="int";
+    $$=type;
 };
 Block : '{' Stmt '}'{
-    auto stmt=unique_ptr<string>($2);
-    $$=new string("{"+*stmt+"}");
+    auto block=new BlockAST();
+    block->stmt=unique_ptr<BaseAST>($2);
+    $$=block;
 };
 Stmt : RETURN Number ';'{
-    auto number=unique_ptr<string>($2);
-    $$=new string("return "+*number+";");
+    auto stmt=new StmtAST();
+    stmt->number=($2);
+    $$=stmt;
 };
 Number : INT_CONST{
-    $$=new string(to_string($1));
+    $$=$1;
 };
 /* 基本定义了语法的处理逻辑。利用c语言处理*/
 %%
 
-void yyerror(unique_ptr<string> &ast,const char *s){
+void yyerror(unique_ptr<BaseAST> &ast,const char *s){
     cerr<<"error: "<<s<<endl;
 }
 

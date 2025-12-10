@@ -18,7 +18,7 @@ class CompUnitAST: public BaseAST{
     public:
     std::unique_ptr<BaseAST> func_def;
     void Dump() const override{
-        std::cout<<"ComUnitAST{";
+        std::cout<<"ComUnitAST{ ";
         func_def->Dump();
         std::cout<<"}";
         // 递归输出
@@ -31,15 +31,39 @@ class FuncDefAST: public BaseAST{
     std::string ident;
     std::unique_ptr<BaseAST> block;
     void Dump() const override{
-        std::cout<<"FuncDefAST{";
+        std::cout<<"FuncDefAST{ ";
+        // 标志从属关系
         func_type->Dump();
-        std::cout<<"+ "<<ident<<"+ ";
+        std::cout<<" + "<<ident<<" + ";
         block->Dump();
         std::cout<<"}";
     }
 };
 //其他终结类型相同
-
-
+class BlockAST:public BaseAST{
+    public:
+    std::unique_ptr<BaseAST> stmt;
+    void Dump() const override{
+        std::cout<<"BlockAST{ ";
+        stmt->Dump();
+        std::cout<<"}";
+    }
+};
+class StmtAST:public BaseAST{
+    public:
+    int number;
+    void Dump() const override{
+        std::cout<<"StmtAST{ ";
+        std::cout<<number<<" ";
+        std::cout<<"}";
+    }
+};
+class FuncTypeAST:public BaseAST{
+    public:
+    std::string functype;
+    void Dump() const override{
+        std::cout<<functype;
+    }
+};
 
 #endif

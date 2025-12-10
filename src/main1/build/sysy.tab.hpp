@@ -85,6 +85,6 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE yylval;
 
-int yyparse (std::unique_ptr<std::string> &ast);
+int yyparse (std::unique_ptr<BaseAST> &ast);
 
 #endif /* !YY_YY_HOME_SABER_FUN_MYCC_SRC_MAIN1_BUILD_SYSY_TAB_HPP_INCLUDED  */
